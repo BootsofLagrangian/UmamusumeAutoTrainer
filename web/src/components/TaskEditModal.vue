@@ -3,26 +3,26 @@
     <div  class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <h5 class="modal-header">
-          新建任务
+          Create New Task
         </h5>
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="selectTaskType">⭐ 任务选择</label>
+              <label for="selectTaskType">⭐ Task Selection</label>
               <select v-model="selectedUmamusumeTaskType" class="form-control" id="selectTaskType">
                 <option v-for="task in umamusumeTaskTypeList" :value="task">{{task.name}}</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="selectExecuteMode">⭐ 执行模式选择</label>
+              <label for="selectExecuteMode">⭐ Execution Mode Selection</label>
               <select v-model="selectedExecuteMode" class="form-control" id="selectExecuteMode">
-                <option value=1>一次性</option>
+                <option value=1>One-time</option>
               </select>
             </div>
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="selectSernaio">⭐ 剧本选择</label>
+                  <label for="selectSernaio">⭐ Scenario Selection</label>
                   <select class="form-control" id="selectSernaio">
                     <option value=1>URA</option>
                   </select>
@@ -30,18 +30,18 @@
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="selectUmamusume">赛马娘选择</label>
+                  <label for="selectUmamusume">Uma Musume Selection</label>
                   <select disabled class="form-control" id="selectUmamusume">
-                    <option value=1>使用上次选择</option>
+                    <option value=1>Use Last Selection</option>
                   </select>
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="selectAutoRecoverTP">TP不足时自动恢复（仅使用药水）</label>
+                  <label for="selectAutoRecoverTP">Auto recover when TP insufficient (potions only)</label>
                   <select v-model="recoverTP" class="form-control" id="selectAutoRecoverTP">
-                    <option :value=true>是</option>
-                    <option :value=false>否</option>
+                    <option :value=true>Yes</option>
+                    <option :value=false>No</option>
                   </select>
                 </div>
               </div>
@@ -49,21 +49,21 @@
             <div class="row">
               <div class="col-8">
                 <div class="form-group">
-                  <label for="race-select">⭐ 使用预设</label>
+                  <label for="race-select">⭐ Use Preset</label>
                     <div class="form-inline">
                       <select v-model="presetsUse" style="text-overflow: ellipsis;width: 40em;"  class="form-control" id="use_presets">
                         <option v-for="set in cultivatePresets" :value="set">{{set.name}}</option>
                       </select>
-                      <span class="btn auto-btn ml-2" v-on:click="applyPresetRace">应用</span>
+                      <span class="btn auto-btn ml-2" v-on:click="applyPresetRace">Apply</span>
                     </div>
                 </div>
               </div>
               <div class="col-4">
                 <div class="form-group">
-                  <label for="presetNameEditInput">保存为预设</label>
+                  <label for="presetNameEditInput">Save as Preset</label>
                   <div class="form-inline">
-                    <input v-model="presetNameEdit" type="text" class="form-control" id="presetNameEditInput" placeholder="预设名称">
-                    <span class="btn auto-btn ml-2" v-on:click="addPresets">保存</span>
+                    <input v-model="presetNameEdit" type="text" class="form-control" id="presetNameEditInput" placeholder="Preset Name">
+                    <span class="btn auto-btn ml-2" v-on:click="addPresets">Save</span>
                   </div>
                 </div>
               </div>
@@ -72,7 +72,7 @@
             <div class="row">
               <div class="col-4">
                 <div class="form-group">
-                  <label>⭐ 借用支援卡选择</label>
+                  <label>⭐ Support Card Selection</label>
                   <select v-model="selectedSupportCard" class="form-control" id="selectedSupportCard">
                     <option v-for="card in umausumeSupportCardList" :value="card">({{card.desc}}) {{card.name}}</option>
                   </select>
@@ -80,65 +80,65 @@
               </div>
               <div class="col-2">
                 <div class="form-group">
-                  <label for="selectSupportCardLevel">支援卡等级(≥)</label>
+                  <label for="selectSupportCardLevel">Support Card Level (≥)</label>
                   <input v-model="supportCardLevel" type="number" class="form-control" id="selectSupportCardLevel" placeholder="">
                 </div>
               </div>
               <div class="col-3">
                 <div class="form-group">
-                  <label for="inputClockUseLimit">使用闹钟数量限制</label>
+                  <label for="inputClockUseLimit">Clock Usage Limit</label>
                   <input v-model="clockUseLimit" type="number" class="form-control" id="inputClockUseLimit" placeholder="">
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <div>⭐ 目标属性 （如果不知道具体填多少, 可以自己手动打一盘把最终数值填入）</div>
+              <div>⭐ Target Attributes (If unsure about values, play manually once and input final stats)</div>
             </div>
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                    <label for="speed-value-input">速度</label>
+                    <label for="speed-value-input">Speed</label>
                     <input type="number" v-model="expectSpeedValue" class="form-control" id="speed-value-input">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="stamina-value-input">耐力</label>
+                  <label for="stamina-value-input">Stamina</label>
                   <input type="number" v-model="expectStaminaValue" class="form-control" id="stamina-value-input">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="power-value-input">力量</label>
+                  <label for="power-value-input">Power</label>
                   <input type="number" v-model="expectPowerValue" class="form-control" id="power-value-input">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="will-value-input">毅力</label>
+                  <label for="will-value-input">Guts</label>
                   <input type="number" v-model="expectWillValue" class="form-control" id="will-value-input">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="intelligence-value-input">智力</label>
+                  <label for="intelligence-value-input">Wisdom</label>
                   <input type="number" v-model="expectIntelligenceValue" class="form-control" id="intelligence-value-input">
                 </div>
               </div>
             </div>
             <div>
               <div class="form-group">
-              <span v-if="!showAdvanceOption" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchAdvanceOption">展开高级选项</span>
-              <span v-if="showAdvanceOption" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchAdvanceOption">收起高级选项</span>
+              <span v-if="!showAdvanceOption" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchAdvanceOption">Expand Advanced Options</span>
+              <span v-if="showAdvanceOption" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchAdvanceOption">Collapse Advanced Options</span>
               </div>
             </div>
             <div v-if ="showAdvanceOption">
               <div class="form-group">
-                <div>⭐ 额外权重</div>
+                <div>⭐ Extra Weight</div>
               </div>
-              <p>调整ai对训练的倾向, 不影响最终目标属性, 一般用于提前完成某一种训练的目标属性，建议权重范围 [-1.0 ~ 1.0], 0即为不使用额外权重;</p>
-              <p>支援卡或种马强度低时, 建议增加在一个属性权重的同时减少其他属性同样数值的权重</p>
-              <div style="margin-bottom: 10px;">第一年</div>
+              <p>Adjust AI training preferences without affecting final target attributes. Used to prioritize certain training types. Recommended weight range [-1.0 ~ 1.0], 0 means no extra weight.</p>
+              <p>When support cards or stallions are weak, increase weight for one attribute while decreasing others by the same amount.</p>
+              <div style="margin-bottom: 10px;">First Year</div>
               <div class="row">
                 <div v-for="v,i in extraWeight1" class="col">
                   <div class="form-group">
@@ -146,7 +146,7 @@
                   </div>
                 </div>
               </div>
-              <div style="margin-bottom: 10px;">第二年</div>
+              <div style="margin-bottom: 10px;">Second Year</div>
               <div class="row">
                 <div v-for="v,i in extraWeight2" class="col">
                   <div class="form-group">
@@ -154,7 +154,7 @@
                   </div>
                 </div>
               </div>
-              <div style="margin-bottom: 10px;">第三年</div>
+              <div style="margin-bottom: 10px;">Third Year</div>
               <div class="row">
                 <div v-for="v,i in extraWeight3" class="col">
                   <div class="form-group">
@@ -165,39 +165,39 @@
             </div>
 
             <div class="form-group">
-              <div>⭐ 跑法选择</div>
+              <div>⭐ Racing Strategy Selection</div>
             </div>
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="selectTactic1">第一年</label>
+                  <label for="selectTactic1">First Year</label>
                   <select v-model="selectedRaceTactic1" class="form-control" id="selectTactic1">
-                    <option :value=1>后追（追）</option>
-                    <option :value=2>居中（差）</option>
-                    <option :value=3>前列（先）</option>
-                    <option :value=4>领头（逃）</option>
+                    <option :value=1>Closer (Oikomi)</option>
+                    <option :value=2>Mid-pack (Sashi)</option>
+                    <option :value=3>Front runner (Senkou)</option>
+                    <option :value=4>Pace setter (Nige)</option>
                   </select>
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="selectTactic2">第二年</label>
+                  <label for="selectTactic2">Second Year</label>
                   <select v-model="selectedRaceTactic2" class="form-control" id="selectTactic2">
-                    <option :value=1>后追（追）</option>
-                    <option :value=2>居中（差）</option>
-                    <option :value=3>前列（先）</option>
-                    <option :value=4>领头（逃）</option>
+                    <option :value=1>Closer (Oikomi)</option>
+                    <option :value=2>Mid-pack (Sashi)</option>
+                    <option :value=3>Front runner (Senkou)</option>
+                    <option :value=4>Pace setter (Nige)</option>
                   </select>
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="selectTactic3">第三年</label>
+                  <label for="selectTactic3">Third Year</label>
                   <select v-model="selectedRaceTactic3" class="form-control" id="selectTactic3">
-                    <option :value=1>后追（追）</option>
-                    <option :value=2>居中（差）</option>
-                    <option :value=3>前列（先）</option>
-                    <option :value=4>领头（逃）</option>
+                    <option :value=1>Closer (Oikomi)</option>
+                    <option :value=2>Mid-pack (Sashi)</option>
+                    <option :value=3>Front runner (Senkou)</option>
+                    <option :value=4>Pace setter (Nige)</option>
                   </select>
                 </div>
               </div>
@@ -206,18 +206,18 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="race-select">⭐ 额外赛程选择</label>
+                    <label for="race-select">⭐ Additional Race Selection</label>
                     <textarea type="text" disabled v-model="extraRace" class="form-control" id="race-select"></textarea>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-              <span v-if="!showRaceList" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchRaceList">展开赛程选项</span>
-              <span v-if="showRaceList" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchRaceList">收起赛程选项</span>
+              <span v-if="!showRaceList" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchRaceList">Expand Race Options</span>
+              <span v-if="showRaceList" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchRaceList">Collapse Race Options</span>
               </div>
               <div class="row" v-if="showRaceList"> 
                 <div class="col">
-                  <div>第一年</div>
+                  <div>First Year</div>
                   <br/>
                   <div class="form-check">
                     <div v-for="race in umamusumeRaceList_1">
@@ -229,7 +229,7 @@
                   </div>
                 </div>
                 <div class="col">
-                  <div>第二年</div>
+                  <div>Second Year</div>
                   <br/>
                   <div class="form-check">
                     <div v-for="race in umamusumeRaceList_2">
@@ -241,7 +241,7 @@
                   </div>
                 </div>
                 <div class="col">
-                  <div>第三年</div>
+                  <div>Third Year</div>
                   <br/>
                   <div class="form-check">
                     <div v-for="race in umamusumeRaceList_3">
@@ -258,29 +258,29 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="skill-learn">⭐ 技能学习</label>
+                    <label for="skill-learn">⭐ Skill Learning</label>
                   </div>
                 </div>
               </div>
             </div>
             <div v-for="(item,index) in skillLearnPriorityList" :key="item.priority">
               <div class="form-group row">
-                <label class="col-sm-3" for="'skill-learn-' + item.id">❗ 学习优先级 {{ item.priority+1 }}</label>
+                <label class="col-sm-3" for="'skill-learn-' + item.id">❗ Learning Priority {{ item.priority+1 }}</label>
                 <div class="col-sm-6">
-                  <textarea type="text"  v-model="item.skills" class="form-control" id="skill-learn-priority" placeholder="技能1名称,技能2名称,....(使用英文逗号)"></textarea>
+                  <textarea type="text"  v-model="item.skills" class="form-control" id="skill-learn-priority" placeholder="Skill1 name, Skill2 name,... (use English comma)"></textarea>
                 </div>
                 <div class="col-sm-3">
-                  <span class="red-button auto-btn ml-2" v-on:click="deleteBox(item,index)">删除当前优先级</span>
+                  <span class="red-button auto-btn ml-2" v-on:click="deleteBox(item,index)">Delete Current Priority</span>
                 </div>
               </div>
             </div>
-            <span class="btn auto-btn ml-2" v-on:click="addBox(item)">新增优先级</span>
+            <span class="btn auto-btn ml-2" v-on:click="addBox(item)">Add Priority</span>
             <div class="form-group mb-0">
               <div class="row">
                 <div class="col">
                   <div class="form-group">
                     <br>
-                    <label for="skill-learn-default">✅ (其余未列出技能均在此优先级)</label>
+                    <label for="skill-learn-default">✅ (All other unlisted skills are at this priority)</label>
                   </div>
                 </div>
               </div>
@@ -290,8 +290,8 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="skill-learn-blacklist">⛔ 黑名单(任何情况下都不学习这些技能)</label>
-                    <textarea type="text"  v-model="skillLearnBlacklist" class="form-control" id="skill-learn-blacklist" placeholder="钢铁意志,迅疾如风,...(真不会有人点这些吧)"></textarea>
+                    <label for="skill-learn-blacklist">⛔ Blacklist (Never learn these skills under any circumstances)</label>
+                    <textarea type="text"  v-model="skillLearnBlacklist" class="form-control" id="skill-learn-blacklist" placeholder="Iron Will, Swift as Wind,... (surely no one would pick these)"></textarea>
                   </div>
                 </div>
               </div>
@@ -302,25 +302,25 @@
               <div class="row">
                 <div class="col-3">
                   <div class="form-group">
-                    <label for="learnSkillOnlyUserProvidedSelector">育成中仅允许学习上面的技能</label>
+                    <label for="learnSkillOnlyUserProvidedSelector">Only allow learning skills listed above during training</label>
                     <select v-model="learnSkillOnlyUserProvided" class="form-control" id="learnSkillOnlyUserProvidedSelector">
-                      <option :value=true>是</option>
-                      <option :value=false>否</option>
+                      <option :value=true>Yes</option>
+                      <option :value=false>No</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="form-group">
-                    <label for="learnSkillBeforeRaceSelector">在参赛前学习技能</label>
+                    <label for="learnSkillBeforeRaceSelector">Learn skills before races</label>
                     <select disabled v-model="learnSkillBeforeRace" class="form-control" id="learnSkillBeforeRace">
-                      <option :value=true>是</option>
-                      <option :value=false>否</option>
+                      <option :value=true>Yes</option>
+                      <option :value=false>No</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="form-group">
-                    <label for="inputSkillLearnThresholdLimit">育成中pt超过此值后学习技能</label>
+                    <label for="inputSkillLearnThresholdLimit">Learn skills when points exceed this value during training</label>
                     <input v-model="learnSkillThreshold" type="number" class="form-control" id="inputSkillLearnThresholdLimit" placeholder="">
                   </div>
                 </div>
@@ -340,14 +340,14 @@
           </div> -->
         </div>
         <div class="modal-footer">
-          <span class="btn auto-btn" v-on:click="addTask">确定</span>
+          <span class="btn auto-btn" v-on:click="addTask">Confirm</span>
         </div>
       </div>
       <!-- 通知 -->
       <div class="position-fixed" style="z-index: 5; right: 40%; width: 300px;">
         <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
           <div class="toast-body">
-            ✔ 预设保存成功
+            ✔ Preset saved successfully
           </div>
         </div>
       </div>
@@ -369,70 +369,70 @@ export default {
       umamusumeTaskTypeList:[
         {
           id: 1,
-          name: "育成",
+          name: "Training",
         }
       ],
       umamusumeList:[
-        {id:1, name:'特别周'},
-        {id:2, name:'无声铃鹿'},
-        {id:3, name:'东海帝王'},
-        {id:4, name:'丸善斯基'},
-        {id:5, name:'小栗帽'},
-        {id:6, name:'大树快车'},
-        {id:7, name:'目白麦昆'},
-        {id:8, name:'好歌剧'},
-        {id:9, name:'鲁道夫象征'},
-        {id:10, name:'米浴'},
-        {id:11, name:'黄金船'},
-        {id:12, name:'伏特加'},
-        {id:13, name:'大和赤骥'},
-        {id:14, name:'草上飞'},
-        {id:15, name:'神鹰'},
-        {id:16, name:'气槽'},
-        {id:17, name:'重炮'},
-        {id:18, name:'超级小海湾'},
-        {id:19, name:'目白赖恩'},
-        {id:20, name:'爱丽速子'},
-        {id:21, name:'胜利奖券'},
-        {id:22, name:'樱花进王'},
-        {id:23, name:'春乌拉拉'},
-        {id:24, name:'待兼福来'},
-        {id:25, name:'优秀素质'},
-        {id:26, name:'帝王光环'},
+        {id:1, name:'Special Week'},
+        {id:2, name:'Silent Suzuka'},
+        {id:3, name:'Tokai Teio'},
+        {id:4, name:'Maruzensky'},
+        {id:5, name:'Oguri Cap'},
+        {id:6, name:'Gold Ship'},
+        {id:7, name:'Mejiro McQueen'},
+        {id:8, name:'Opera O'},
+        {id:9, name:'Rudolf Symbol'},
+        {id:10, name:'Rice Shower'},
+        {id:11, name:'Gold Ship'},
+        {id:12, name:'Vodka'},
+        {id:13, name:'Daiwa Scarlet'},
+        {id:14, name:'Grass Wonder'},
+        {id:15, name:'El Condor Pasa'},
+        {id:16, name:'T.M. Opera O'},
+        {id:17, name:'Narita Brian'},
+        {id:18, name:'Super Creek'},
+        {id:19, name:'Mejiro Ryan'},
+        {id:20, name:'Agnes Tachyon'},
+        {id:21, name:'Winning Ticket'},
+        {id:22, name:'Sakura Bakushin O'},
+        {id:23, name:'Haru Urara'},
+        {id:24, name:'Taiki Shuttle'},
+        {id:25, name:'Fine Motion'},
+        {id:26, name:'Biwa Hayahide'},
       ],
       umausumeSupportCardList:[
-        {id:1, name:'在耀眼景色的前方', desc:'速铃鹿'},
-        {id:2, name:'献上全国第一的演出' , desc: '根特别周'},
-        {id:3, name:'有梦想就要大声说出来！', desc: '速帝王'},
-        {id:4, name:'不沉舰的进击', desc: '耐黄金船'},
-        {id:5, name:'伏特加之路', desc: '力伏特加'},
-        {id:6, name:'万紫千红中一枝独秀', desc: '根草上飞'},
-        {id:7, name:'热情的冠军', desc: '力神鹰'},
-        {id:8, name:'期待已久的计谋', desc: '耐青云'},
-        {id:9, name:'划破天空的闪电少女！', desc: '耐玉藻十字'},
-        {id:10, name:'全身心的感谢', desc: '智美妙姿势'},
-        {id:11, name:'飞奔吧，闪耀吧', desc: '根风神'},
-        {id:12, name:'B·N·Winner!', desc: '根奖券'},
-        {id:13, name:'冲向前方7厘米之外', desc: '智空中神宫'},
-        {id:14, name:'Run(my)way', desc: '速黄金城'},
-        {id:15, name:'好快！好吃！好快', desc: '速进王'},
-        {id:16, name:'一颗安心糖', desc: '耐小海湾'},
-        {id:17, name:'这就是我的优俊偶像之道', desc: '力飞鹰'},
-        {id:18, name:'哪怕还未长大', desc: '速西野花'},
-        {id:19, name:'必杀技！双胡萝卜拳', desc: '速微光飞驹'},
-        {id:20, name:'欢迎来到特雷森学园！', desc: '绿帽'},
-        {id:21, name:'夕阳是憧憬之色', desc: '速特别周'},
-        {id:22, name:'要受人喜爱啊', desc: '力小栗帽'},
-        {id:23, name:'涡轮引擎马力全开！', desc: '速双涡轮'},
-        {id:24, name:'心中的烈火无法抑制', desc: '力八重'},
-        {id:25, name:'身后迫近的热浪是动力', desc: '速北黑'},
-        {id:26, name:'超越那前方的背影', desc: '耐光钻'},
-        {id:27, name:'身为新娘！', desc: '速川上公主'},
-        {id:28, name:'独享冰凉？', desc: '速东商变革'},
-        {id:29, name:'心中的烈火无法抑制', desc: '力八重'},
-        {id:30, name:'即使满身泥土，也要追逐梦想', desc: '智内恰'},
-        {id:31, name:'Two Pieces', desc: '速成田白仁'},
-        {id:32, name:'见习魔女与漫漫长夜', desc: '速东商变革'},
+        {id:1, name:'Beyond the Brilliant Scene', desc:'Speed Suzuka'},
+        {id:2, name:'Presenting the Best Performance in Japan', desc: 'Guts Special Week'},
+        {id:3, name:'If You Have Dreams, Shout Them Loud!', desc: 'Speed Teio'},
+        {id:4, name:'Unsinkable Assault', desc: 'Stamina Gold Ship'},
+        {id:5, name:'The Vodka Way', desc: 'Power Vodka'},
+        {id:6, name:'Standing Out Among All the Colors', desc: 'Guts Grass Wonder'},
+        {id:7, name:'Passionate Champion', desc: 'Power El Condor Pasa'},
+        {id:8, name:'Long-Awaited Scheme', desc: 'Stamina Seiun Sky'},
+        {id:9, name:'Lightning Girl Splitting the Sky!', desc: 'Stamina Tamamo Cross'},
+        {id:10, name:'Heartfelt Gratitude', desc: 'Wisdom Mihono Bourbon'},
+        {id:11, name:'Run and Shine', desc: 'Guts Fuji Kiseki'},
+        {id:12, name:'B·N·Winner!', desc: 'Guts Ticket'},
+        {id:13, name:'Forward 7 Centimeters Ahead', desc: 'Wisdom Air Groove'},
+        {id:14, name:'Run(my)way', desc: 'Speed King Halo'},
+        {id:15, name:'So Fast! So Good! So Fast!', desc: 'Speed Bakushin O'},
+        {id:16, name:'A Reassuring Candy', desc: 'Stamina Super Creek'},
+        {id:17, name:'This is My Uma Idol Way', desc: 'Power Falcon'},
+        {id:18, name:'Even Though Still Growing', desc: 'Speed Nishino Flower'},
+        {id:19, name:'Special Move! Twin Carrot Punch', desc: 'Speed Biwa Hayahide'},
+        {id:20, name:'Welcome to Tracen Academy!', desc: 'Friend Cap'},
+        {id:21, name:'The Sunset is the Color of Yearning', desc: 'Speed Special Week'},
+        {id:22, name:'Be Loved by Everyone', desc: 'Power Oguri Cap'},
+        {id:23, name:'Turbo Engine Full Power!', desc: 'Speed Twin Turbo'},
+        {id:24, name:'The Burning Fire in My Heart Cannot Be Suppressed', desc: 'Power Yaeno Muteki'},
+        {id:25, name:'The Heat Wave Behind is My Drive', desc: 'Speed Hokko Tarumae'},
+        {id:26, name:'Surpassing That Figure Ahead', desc: 'Stamina Admire Vega'},
+        {id:27, name:'As a Bride!', desc: 'Speed Kawakami Princess'},
+        {id:28, name:'Enjoying the Cool Alone?', desc: 'Speed Smart Falcon'},
+        {id:29, name:'The Burning Fire in My Heart Cannot Be Suppressed', desc: 'Power Yaeno Muteki'},
+        {id:30, name:'Even Covered in Mud, Still Chase Dreams', desc: 'Wisdom Narita Top Road'},
+        {id:31, name:'Two Pieces', desc: 'Speed Narita Brian'},
+        {id:32, name:'Apprentice Witch and the Long Night', desc: 'Speed Smart Falcon'},
       ],
       umamusumeRaceList_1:[
         {id:1401, name:'函馆初级锦标赛',date: '7月后', type: 'GIII'},
@@ -681,11 +681,11 @@ export default {
           race_tactic_3: 4,
         },
         {
-          name:"历战小栗帽35战60w粉丝(需求觉醒3,借满破小海湾,种马速耐,支援卡带赛后加成高的)",
+          name:"Veteran Oguri Cap 35 Races 600k Fans (Requires Awakening 3, Max Limit Break Super Creek, Speed/Stamina Stallion, Support Cards with High Race Bonus)",
           race_list:[1601,1701,1902,2103,2302,2401,2701,2905,3103,3303,3404,3601,4102,4203,4408,4506,4607,4804,4902,5208,5407,5601,5709,5904,6006,6602,6701,6807,7007,7111,7204],
-          skill:"大胃王",
+          skill:"Big Eater",
           expect_attribute:[700,500,700,350,350],
-          follow_support_card:{"id":16,"name":"一颗安心糖","desc":"耐小海湾"},
+          follow_support_card:{"id":16,"name":"A Reassuring Candy","desc":"Stamina Super Creek"},
           follow_support_card_level:50,
           clock_use_limit:2,
           learn_skill_threshold:450,

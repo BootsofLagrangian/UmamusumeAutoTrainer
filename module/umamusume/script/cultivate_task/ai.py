@@ -36,32 +36,32 @@ def get_operation(ctx: UmamusumeContext) -> TurnOperation | None:
     else:
         normalized_training_level_result = [1, 1, 1, 1, 1]
 
-    # 第一年至第二年合宿前
+    # First year to before second year camp
     if ctx.cultivate_detail.turn_info.date <= 36:
         attr_weight = 0.2
         support_card_weight = 0.6
         training_level_weight = 0.2
-    # 第二年合宿期间
+    # During second year camp
     elif 36 < ctx.cultivate_detail.turn_info.date <= 40:
         attr_weight = 0.8
         support_card_weight = 0.2
         training_level_weight = 0
-    # 第二年合宿后至第三年前
+    # After second year camp to before third year
     elif 40 < ctx.cultivate_detail.turn_info.date <= 48:
         attr_weight = 0.6
         support_card_weight = 0.2
         training_level_weight = 0.2
-    # 第三年合宿前
+    # Before third year camp
     elif 48 < ctx.cultivate_detail.turn_info.date <= 60:
         attr_weight = 0.6
         support_card_weight = 0.1
         training_level_weight = 0.3
-    # 第三年合宿期间
+    # During third year camp
     elif 60 < ctx.cultivate_detail.turn_info.date <= 64:
         attr_weight = 1
         support_card_weight = 0
         training_level_weight = 0
-    # 第三年至结束
+    # Third year to end
     elif 64 < ctx.cultivate_detail.turn_info.date <= 99:
         attr_weight = 0.8
         support_card_weight = 0
@@ -71,14 +71,14 @@ def get_operation(ctx: UmamusumeContext) -> TurnOperation | None:
         support_card_weight = 0
         training_level_weight = 0
 
-    # 训练得分
+    # Training scores
     training_score = []
     for i in range(5):
         training_score.append(normalized_attribute_result[i] * attr_weight + normalized_support_card_result[i] *
                               support_card_weight + normalized_training_level_result[i] * training_level_weight)
-    log.debug("训练综合得分：" + str(training_score))
+    log.debug("Training comprehensive scores: " + str(training_score))
 
-    # 出道战成功才能参加比赛
+    # Can only participate in races after winning debut race
     if ctx.cultivate_detail.debut_race_win:
         extra_race_this_turn = [i for i in ctx.cultivate_detail.extra_race_list if str(i)[:2]
                                 == str(ctx.cultivate_detail.turn_info.date)]
@@ -132,7 +132,7 @@ def get_training_level_score(ctx: UmamusumeContext):
     result = []
     for i in range(len(expect_attribute)):
         result.append(expect_attribute[i] / sum(expect_attribute) * total_score)
-    log.debug("每个训练设施的得分：" + str(result))
+    log.debug("Score for each training facility: " + str(result))
     return result
 
 
@@ -144,7 +144,7 @@ def get_training_support_card_score(ctx: UmamusumeContext) -> list[float]:
         for j in range(len(turn_info.training_info_list[i].support_card_info_list)):
             score += get_support_card_score(ctx, turn_info.training_info_list[i].support_card_info_list[j])
         result.append(score)
-    log.debug("每个训练的支援卡得分：" + str(result))
+    log.debug("Support card score for each training: " + str(result))
     return result
 
 
@@ -159,7 +159,7 @@ def get_training_basic_attribute_score(ctx: UmamusumeContext, turn_info: TurnInf
             extra_weight = ctx.cultivate_detail.extra_weight[1]
         elif 48 < date:
             extra_weight = ctx.cultivate_detail.extra_weight[2]
-    log.debug("本回合额外权重：" + str(extra_weight))
+    log.debug("Extra weight for this turn: " + str(extra_weight))
     turn_expect_attribute = [0, 0, 0, 0, 0]
     ura_extra_attr = 50
     if date > 72:
@@ -177,7 +177,7 @@ def get_training_basic_attribute_score(ctx: UmamusumeContext, turn_info: TurnInf
     result = []
     expect_attribute_all_complete = all(x >= y for x, y in zip(turn_uma_attr, cultivate_expect_attribute))
     if expect_attribute_all_complete:
-        log.debug("育成目标属性已达成")
+        log.debug("Cultivation target attributes achieved")
         for i in range(len(turn_info.training_info_list)):
             incr = [turn_info.training_info_list[i].speed_incr, turn_info.training_info_list[i].stamina_incr,
                     turn_info.training_info_list[i].power_incr, turn_info.training_info_list[i].will_incr,
@@ -213,15 +213,15 @@ def get_training_basic_attribute_score(ctx: UmamusumeContext, turn_info: TurnInf
                                 rating_incr += 0.25 * (cultivate_expect_attribute[j] - turn_expect_attribute[j])
             # rating_incr += turn_info.training_info_list[i].skill_point_incr * 1.45
             result.append(rating_incr * (1 + extra_weight[i]))
-        log.debug("每个训练的原始属性增长得分：" + str(result))
-        log.debug("本回合预期属性：" + str(turn_expect_attribute))
+        log.debug("Raw attribute growth score for each training: " + str(result))
+        log.debug("Expected attributes for this turn: " + str(turn_expect_attribute))
         target_percent = [0, 0, 0, 0, 0]
         for i in range(len(turn_uma_attr)):
             target_percent[i] = turn_uma_attr[i] / turn_expect_attribute[i]
         avg = sum(target_percent) / len(target_percent)
         for i in range(len(result)):
             result[i] = result[i] * (1 - (target_percent[i] - avg))
-    log.debug("每个训练的属性增长得分：" + str(result))
+    log.debug("Attribute growth score for each training: " + str(result))
     return result
 
 
@@ -236,7 +236,7 @@ def get_basic_status_score(status: int) -> float:
             result += status_score[i] * 100
         else:
             if i - 1 > 11:
-                log.debug("识别错误")
+                log.debug("Recognition error")
                 return 0
             result += status * status_score[i - 1]
             break

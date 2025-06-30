@@ -27,7 +27,7 @@ def get_event_choice(ctx: UmamusumeContext, event_name: str) -> int:
             if callable(opt):
                 return opt(ctx)
             else:
-                log.warning("事件[%s]未提供处理逻辑", event_name_normalized)
+                log.warning("Event [%s] has no processing logic provided", event_name_normalized)
                 return 1
-    log.debug("未知事件[%s]，使用默认选项1", event_name)
+    log.debug("Unknown event [%s], using default option 1", event_name)
     return 1

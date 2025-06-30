@@ -20,7 +20,7 @@ class TaskDetail:
 
 
 class EndTaskReason(Enum):
-    TP_NOT_ENOUGH = "训练值不足"
+    TP_NOT_ENOUGH = "Training Points Insufficient"
 
 
 class UmamusumeTask(Task):

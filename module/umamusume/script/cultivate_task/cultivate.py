@@ -17,25 +17,25 @@ def script_cultivate_main_menu(ctx: UmamusumeContext):
     img = ctx.current_screen
     current_date = parse_date(img, ctx)
     if current_date == -1:
-        log.warning("解析日期失败")
+        log.warning("Failed to parse date")
         return
-    # 如果进入新的一回合，记录旧的回合信息并创建新的
+    # If entering a new turn, record old turn info and create new one
     if ctx.cultivate_detail.turn_info is None or current_date != ctx.cultivate_detail.turn_info.date:
         if ctx.cultivate_detail.turn_info is not None:
             ctx.cultivate_detail.turn_info_history.append(ctx.cultivate_detail.turn_info)
         ctx.cultivate_detail.turn_info = TurnInfo()
         ctx.cultivate_detail.turn_info.date = current_date
-        log.debug("进入新回合，日期：" + str(current_date))
+        log.debug("Entering new turn, date: " + str(current_date))
         ctx.cultivate_detail.reset_skill_learn()
 
-    # 解析主界面
+    # Parse main interface
     if not ctx.cultivate_detail.turn_info.parse_main_menu_finish:
         parse_cultivate_main_menu(ctx, img)
 
     has_extra_race = len([i for i in ctx.cultivate_detail.extra_race_list if str(i)[:2]
                           == str(ctx.cultivate_detail.turn_info.date)]) != 0
 
-    # 意外情况处理
+    # Handle unexpected situations
     if not ctx.cultivate_detail.turn_info.turn_learn_skill_done and ctx.cultivate_detail.learn_skill_done:
         ctx.cultivate_detail.reset_skill_learn()
 
@@ -81,7 +81,7 @@ def script_cultivate_main_menu(ctx: UmamusumeContext):
 
 def script_cultivate_training_select(ctx: UmamusumeContext):
     if ctx.cultivate_detail.turn_info is None:
-        log.warning("回合信息未初始化")
+        log.warning("Turn info not initialized")
         ctx.ctrl.click_by_point(RETURN_TO_CULTIVATE_MAIN_MENU)
         return
 
@@ -195,18 +195,18 @@ def script_cultivate_event(ctx: UmamusumeContext):
         if choice_index - 1 > len(selector_list):
             choice_index = 1
         ctx.ctrl.click(selector_list[choice_index - 1][0], selector_list[choice_index - 1][1],
-                       "事件选项-" + str(choice_index))
+                       "Event option-" + str(choice_index))
     else:
-        log.debug("未出现选项")
+        log.debug("No options appeared")
 
 
 def script_cultivate_goal_race(ctx: UmamusumeContext):
     img = ctx.current_screen
     current_date = parse_date(img, ctx)
     if current_date == -1:
-        log.warning("解析日期失败")
+        log.warning("Failed to parse date")
         return
-    # 如果进入新的一回合，记录旧的回合信息并创建新的
+    # If entering a new turn, record old turn info and create new one
     if ctx.cultivate_detail.turn_info is None or current_date != ctx.cultivate_detail.turn_info.date:
         if ctx.cultivate_detail.turn_info is not None:
             ctx.cultivate_detail.turn_info_history.append(ctx.cultivate_detail.turn_info)
@@ -218,7 +218,7 @@ def script_cultivate_goal_race(ctx: UmamusumeContext):
 def script_cultivate_race_list(ctx: UmamusumeContext):
     time.sleep(2)
     if ctx.cultivate_detail.turn_info is None:
-        log.warning("回合信息未初始化")
+        log.warning("Turn info not initialized")
         ctx.ctrl.click_by_point(RETURN_TO_CULTIVATE_MAIN_MENU)
         return
     img = cv2.cvtColor(ctx.current_screen, cv2.COLOR_BGR2GRAY)
@@ -250,8 +250,8 @@ def script_cultivate_race_list(ctx: UmamusumeContext):
                     return
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
                 if not compare_color_equal(img[1006, 701], [211, 209, 219]):
-                    log.warning("未找到目标赛事")
-                    # 没有合适的赛事就使用备用的操作
+                    log.warning("Target race not found")
+                    # Use backup operation if no suitable race found
                     if ctx.cultivate_detail.turn_info.turn_operation.race_id == 0:
                         ctx.cultivate_detail.turn_info.turn_operation.turn_operation_type = ctx.cultivate_detail.turn_info.turn_operation.turn_operation_type_replace
                     ctx.ctrl.click_by_point(RETURN_TO_CULTIVATE_MAIN_MENU)
@@ -350,7 +350,7 @@ def script_cultivate_learn_skill(ctx: UmamusumeContext):
         if len(ctx.cultivate_detail.learn_skill_list) == 0:
             learn_skill_list = SKILL_LEARN_PRIORITY_LIST
         else:
-            #如果用户自定义了技能优先级，那么不再采用预设的优先级
+            # If user customized skill priority, no longer use preset priority
             learn_skill_list = ctx.cultivate_detail.learn_skill_list
     else:
         if len(ctx.cultivate_detail.learn_skill_list) == 0:
@@ -361,12 +361,12 @@ def script_cultivate_learn_skill(ctx: UmamusumeContext):
         else:
             learn_skill_list = ctx.cultivate_detail.learn_skill_list
 
-    # 遍历整页, 找出所有可点的技能
+    # Traverse the entire page to find all clickable skills
     skill_list = []
     while ctx.task.running():
         img = ctx.ctrl.get_screen()
         current_screen_skill_list = get_skill_list(img, learn_skill_list,learn_skill_blacklist)
-        # 避免重复统计(会出现在页末翻页不完全的情况)
+        # Avoid duplicate counting (can occur when page scroll is incomplete at page end)
         for i in current_screen_skill_list:
             if i not in skill_list:
                 skill_list.append(i)
@@ -376,16 +376,16 @@ def script_cultivate_learn_skill(ctx: UmamusumeContext):
         ctx.ctrl.swipe(x1=23, y1=1000, x2=23, y2=636, duration=1000, name="")
         time.sleep(1)
 
-    log.debug("当前技能状态：" + str(skill_list))
+    log.debug("Current skill status: " + str(skill_list))
 
-    # 将金色技能和其后面的技能绑定
+    # Bind gold skills with their subsequent skills
     for i in range(len(skill_list)):
         if i != (len(skill_list) - 1) and skill_list[i]["gold"] is True:
             skill_list[i]["subsequent_skill"] = skill_list[i + 1]["skill_name"]
 
-    # 按照优先级排列
+    # Sort by priority
     skill_list = sorted(skill_list, key=lambda x: x["priority"])
-    # TODO: 暂时没办法处理一个技能可以点多次的情况
+    # TODO: Currently unable to handle skills that can be clicked multiple times
     img = ctx.ctrl.get_screen()
     total_skill_point_text = re.sub("\\D", "", ocr_line(img[400: 440, 490: 665]))
     if total_skill_point_text == "":
@@ -406,17 +406,17 @@ def script_cultivate_learn_skill(ctx: UmamusumeContext):
                 curr_point += skill_list[j]["skill_cost"]
                 target_skill_list.append(skill_list[j]["skill_name"])
                 target_skill_list_raw.append(skill_list[j]["skill_name_raw"])
-                # 如果点的是金色技能, 就将其绑定的下位技能设置为不可点
+                # If clicking a gold skill, set its bound lower skill as unclickable
                 if skill_list[j]["gold"] is True and skill_list[j]["subsequent_skill"] != '':
                     for k in range(len(skill_list)):
                         if skill_list[k]["skill_name"] == skill_list[j]["subsequent_skill"]:
                             skill_list[k]["available"] = False
 
-    # 向上移动至对齐
+    # Move up to align
     ctx.ctrl.swipe(x1=23, y1=950, x2=23, y2=968, duration=100, name="")
     time.sleep(1)
 
-    # 删除已经学会的技能
+    # Remove already learned skills
     for skill in target_skill_list_raw:
         for prioritylist in ctx.cultivate_detail.learn_skill_list:
             if prioritylist.__contains__(skill):
@@ -425,10 +425,10 @@ def script_cultivate_learn_skill(ctx: UmamusumeContext):
         for prioritylist in ctx.cultivate_detail.learn_skill_list:
             if skill['available'] is False and prioritylist.__contains__(skill['skill_name_raw']):
                 prioritylist.remove(skill['skill_name_raw'])
-    #如果一个优先级全为空，则直接将其删除
+    # If a priority level is completely empty, delete it directly
     ctx.cultivate_detail.learn_skill_list = [x for x in ctx.cultivate_detail.learn_skill_list if x != []]
 
-    # 点技能
+    # Click skills
     while True:
         img = ctx.ctrl.get_screen()
         find_skill(ctx, img, target_skill_list, learn_any_skill=False)
@@ -440,8 +440,8 @@ def script_cultivate_learn_skill(ctx: UmamusumeContext):
         ctx.ctrl.swipe(x1=23, y1=636, x2=23, y2=1000, duration=1000, name="")
         time.sleep(1)
 
-    log.debug("当前待学习的技能：" + str(ctx.cultivate_detail.learn_skill_list))
-    log.debug("当前已学习的技能：" + str([skill['skill_name'] for skill in skill_list if not skill['available']]))
+    log.debug("Current skills to learn: " + str(ctx.cultivate_detail.learn_skill_list))
+    log.debug("Current learned skills: " + str([skill['skill_name'] for skill in skill_list if not skill['available']]))
 
     ctx.cultivate_detail.learn_skill_done = True
     ctx.cultivate_detail.turn_info.turn_learn_skill_done = True

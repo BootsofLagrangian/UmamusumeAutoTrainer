@@ -99,7 +99,7 @@ class Executor:
         after_hook = manifest.after_hook
         controller = get_controller()
         try:
-            # 初始化
+            # Initialize
             controller.init_env()
             ctx = manifest.build_context(task, controller)
             ctx.ctrl = controller
@@ -108,14 +108,14 @@ class Executor:
             task.start_task()
             task.task_start_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
-            # 启动应用
-            log.debug("启动："+manifest.app_package_name)
+            # Start application
+            log.debug("Starting: "+manifest.app_package_name)
             ctx.ctrl.start_app(manifest.app_package_name)
             while self.active:
                 if task.task_status == TaskStatus.TASK_STATUS_RUNNING:
                     ctx.current_screen = ctx.ctrl.get_screen()
                     if ctx.current_screen is None:
-                        log.debug("未检测到图像")
+                        log.debug("No image detected")
                         time.sleep(1)
                         continue
                     ctx.prev_ui = ctx.current_ui
@@ -139,6 +139,6 @@ class Executor:
         else:
             self.active = False
         task.end_task_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-        push_system_notification("任务结束", str(task.end_task_reason.value), 10)
+        push_system_notification("Task ended", str(task.end_task_reason.value), 10)
         controller.destroy()
 

@@ -54,15 +54,15 @@ def parse_date(img, ctx: UmamusumeContext) -> int:
                                                   (255, 255, 255))
         turn_to_race_text = ocr_line(sub_img_turn_to_race)
         if turn_to_race_text == "比赛日":
-            log.debug("出道比赛日")
+            log.debug("Debut race day")
             return 12
         turn_to_race_text = re.sub("\\D", "", turn_to_race_text)
         if turn_to_race_text == '':
-            log.warning("出道战前日期识别异常")
+            log.warning("Abnormal date recognition before debut race")
             return 12 - (len(ctx.cultivate_detail.turn_info_history) + 1)
         date_id = 12 - int(turn_to_race_text)
         if date_id < 1:
-            log.warning("出道战前日期识别异常")
+            log.warning("Abnormal date recognition before debut race")
             return 12 - (len(ctx.cultivate_detail.turn_info_history) + 1)
     return date_id
 
@@ -140,7 +140,7 @@ def trans_attribute_value(text: str, ctx: UmamusumeContext,
         prev_turn_idx = len(ctx.cultivate_detail.turn_info_history)
         if prev_turn_idx != 0:
             history = ctx.cultivate_detail.turn_info_history[prev_turn_idx - 1]
-            log.warning("图像识别错误，使用上回合数值")
+            log.warning("Image recognition error, using previous turn values")
             if train_type.value == 1:
                 return history.uma_attribute.speed
             elif train_type.value == 2:
@@ -341,7 +341,7 @@ def find_support_card(ctx: UmamusumeContext, img):
             s = SequenceMatcher(None, support_card_text, ctx.cultivate_detail.follow_support_card_name)
             if s.ratio() > 0.7:
                 ctx.ctrl.click(match_result.center_point[0], match_result.center_point[1] - 75,
-                               "选择支援卡：" + ctx.cultivate_detail.follow_support_card_name + "<" + str(
+                               "Select support card: " + ctx.cultivate_detail.follow_support_card_name + "<" + str(
                                    support_card_level) + ">")
                 return True
         else:
@@ -380,7 +380,7 @@ def find_race(ctx: UmamusumeContext, img, race_id: int = 0) -> bool:
                 if target_race_template is not None:
                     if image_match(race_name_img, target_race_template).find_match:
                         ctx.ctrl.click(match_result.center_point[0], match_result.center_point[1],
-                                       "选择比赛：" + str(RACE_LIST[race_id][1]))
+                                       "Select race: " + str(RACE_LIST[race_id][1]))
                         return True
             img[match_result.matched_area[0][1]:match_result.matched_area[1][1],
             match_result.matched_area[0][0]:match_result.matched_area[1][0]] = 0
@@ -413,7 +413,7 @@ def find_skill(ctx: UmamusumeContext, img, skill: list[str], learn_any_skill: bo
                             skill_pt_cost = int(skill_pt_cost_text)
                             if pt >= skill_pt_cost:
                                 ctx.ctrl.click(match_result.center_point[0] + 128, match_result.center_point[1],
-                                               "加点技能：" + text)
+                                               "Add skill: " + text)
                                 if result in skill:
                                     skill.remove(result)
                                 ctx.cultivate_detail.learn_skill_selected = True
@@ -447,17 +447,17 @@ def get_skill_list(img, skill: list[str], skill_blacklist: list[str]) -> list:
                 text = ocr_line(skill_name_img)
                 cost = re.sub("\\D", "", ocr_line(skill_cost_img))
 
-                # 检查是不是金色技能
+                # Check if it's a gold skill
                 mask = cv2.inRange(skill_info_cp, numpy.array([40, 180, 240]), numpy.array([100, 210, 255]))
                 is_gold = True if mask[120, 600] == 255 else False
 
                 skill_in_priority_list = False
-                skill_name_raw = "" #保存原始技能名字, 以防ocr产生偏差
+                skill_name_raw = "" # Save original skill name to prevent OCR deviation
                 priority = 99
                 for i in range(len(skill)):
                     found_similar_blacklist = find_similar_text(text, skill_blacklist, 0.7)
                     found_similar_prioritylist = find_similar_text(text, skill[i], 0.7)
-                    if found_similar_blacklist != "": # 排除出现在黑名单中的技能
+                    if found_similar_blacklist != "": # Exclude skills that appear in blacklist
                         priority = -1
                         skill_name_raw = found_similar_blacklist
                         skill_in_priority_list = True
@@ -472,7 +472,7 @@ def get_skill_list(img, skill: list[str], skill_blacklist: list[str]) -> list:
 
                 available = not image_match(skill_info_img, REF_SKILL_LEARNED).find_match
 
-                if priority != -1: # 排除出现在黑名单中的技能
+                if priority != -1: # Exclude skills that appear in blacklist
                     res.append({"skill_name": text,
                                 "skill_name_raw": skill_name_raw,
                                 "skill_cost": int(cost),
@@ -484,7 +484,7 @@ def get_skill_list(img, skill: list[str], skill_blacklist: list[str]) -> list:
             img[match_result.matched_area[0][1]:match_result.matched_area[1][1],
                 match_result.matched_area[0][0]:match_result.matched_area[1][0]] = 0
 
-        # 解析曾经获得过的技能
+        # Parse previously obtained skills
         match_result = image_match(img, REF_SKILL_LEARNED)
         if match_result.find_match:
             all_skill_scanned = False
@@ -494,7 +494,7 @@ def get_skill_list(img, skill: list[str], skill_blacklist: list[str]) -> list:
                 skill_info_img = img[pos[0][1] - 65:pos[1][1] + 75, pos[0][0] - 520: pos[1][0] + 150]
                 skill_info_cp = origin_img[pos[0][1] - 65:pos[1][1] + 75, pos[0][0] - 470: pos[1][0] + 150]
 
-                # 检查是不是金色技能
+                # Check if it's a gold skill
                 mask = cv2.inRange(skill_info_cp, numpy.array([40, 180, 240]), numpy.array([100, 210, 255]))
                 is_gold = True if mask[120, 600] == 255 else False
                 skill_name_img = skill_info_img[10: 47, 100: 445]
@@ -513,7 +513,7 @@ def get_skill_list(img, skill: list[str], skill_blacklist: list[str]) -> list:
             break
 
     res = sorted(res, key=lambda x: x["y_pos"])
-    # 没有精确计算过，但是大约y轴小于540就会导致技能名显示不全。暂时没测试出问题。
+    # Not precisely calculated, but roughly y-axis less than 540 will cause incomplete skill name display. No issues found in testing so far.
     return [{k: v for k, v in r.items() if k != "y_pos"} for r in res if r["y_pos"] >= 540]
 
 

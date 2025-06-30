@@ -28,9 +28,9 @@ class TaskStatus(Enum):
 
 
 class EndTaskReason(Enum):
-    COMPLETE = "任务已完成"
-    MANUAL_ABORTED = "任务被手动中止"
-    SYSTEM_ERROR = "系统异常"
+    COMPLETE = "Task Completed"
+    MANUAL_ABORTED = "Task Manually Aborted"
+    SYSTEM_ERROR = "System Error"
 
 
 class Task(metaclass=ABCMeta):
@@ -60,7 +60,7 @@ class Task(metaclass=ABCMeta):
 
     @abstractmethod
     def end_task(self, status, reason) -> None:
-        log.info("任务结束：" + self.task_status.name + "->" + status.name)
+        log.info("Task ended: " + self.task_status.name + "->" + status.name)
         self.task_status = status
         self.end_task_reason = reason
 

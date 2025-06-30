@@ -73,7 +73,7 @@ def exec_script(ctx: UmamusumeContext):
     if ctx.current_ui in default_script_dict:
         default_script_dict[ctx.current_ui](ctx)
     else:
-        print("未找到此界面对应的默认脚本")
+        print("No default script found for this interface")
 
 
 UmamusumeManifest = AppManifest(

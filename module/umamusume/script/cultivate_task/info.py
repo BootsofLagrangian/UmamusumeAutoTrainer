@@ -14,36 +14,36 @@ import bot.base.log as logger
 log = logger.get_logger(__name__)
 
 TITLE = [
-    "赛事详情",
-    "休息&外出确认",
-    "网络错误",
-    "重新挑战",
-    "获得誉名",
-    "完成养成",
-    "缩短事件设置",
-    "外出确认",
-    "技能获取确认",
-    "成功获得技能",
-    "养成结束确认",
-    "优俊少女详情",
-    "粉丝数未达到目标赛事要求",
-    "外出",
-    "跳过确认",
-    "休息确认",
-    "赛事推荐功能",
-    "战术",
-    "目标粉丝数不足",
-    "连续参赛",
-    "医务室确认",
-    "礼物箱",
-    "领取成功",
-    "解锁角色剧情",
-    "目标达成次数不足",
-    "活动剧情解锁",
-    "确认",
-    "回复训练值",
-    "选择养成难度",
-    "确定因子确认",
+    "Race Details",
+    "Rest & Outing Confirmation",
+    "Network Error",
+    "Retry Challenge",
+    "Obtained Title",
+    "Complete Cultivation",
+    "Shorten Event Settings",
+    "Outing Confirmation",
+    "Skill Acquisition Confirmation",
+    "Successfully Obtained Skill",
+    "Cultivation End Confirmation",
+    "Outstanding Girl Details",
+    "Fan count does not meet target race requirements",
+    "Outing",
+    "Skip Confirmation",
+    "Rest Confirmation",
+    "Race Recommendation Feature",
+    "Tactics",
+    "Target fan count insufficient",
+    "Consecutive Racing",
+    "Infirmary Confirmation",
+    "Gift Box",
+    "Collection Successful",
+    "Unlock Character Story",
+    "Target achievement count insufficient",
+    "Activity Story Unlock",
+    "Confirmation",
+    "Recover Training Value",
+    "Select Cultivation Difficulty",
+    "Confirm Factor Confirmation",
 ]
 
 
@@ -58,7 +58,7 @@ def script_info(ctx: UmamusumeContext):
         log.debug(title_text)
         title_text = find_similar_text(title_text, TITLE, 0.8)
         if title_text == "":
-            log.warning("未知的选项框")
+            log.warning("Unknown option box")
             return
         if title_text == TITLE[0]:
             ctx.ctrl.click_by_point(CULTIVATE_GOAL_RACE_INTER_3)
@@ -75,7 +75,7 @@ def script_info(ctx: UmamusumeContext):
                 ctx.cultivate_detail.clock_used += 1
             else:
                 ctx.ctrl.click_by_point(RACE_FAIL_CONTINUE_CANCEL)
-            log.debug("闹钟限制%s,已使用%s", str(ctx.cultivate_detail.clock_use_limit),
+            log.debug("Clock limit: %s, used: %s", str(ctx.cultivate_detail.clock_use_limit),
                       str(ctx.cultivate_detail.clock_used))
         if title_text == TITLE[4]:
             ctx.ctrl.click_by_point(GET_TITLE_CONFIRM)

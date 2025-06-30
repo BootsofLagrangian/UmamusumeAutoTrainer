@@ -42,13 +42,13 @@ class TrainingInfo:
         self.support_card_info_list = []
 
     def log_training_info(self):
-        log.info("训练结果：速度：%s, 耐力：%s, 力量：%s, 毅力：%s, 智力：%s, 技能点：%s", self.speed_incr,
+        log.info("Training result: Speed: %s, Stamina: %s, Power: %s, Willpower: %s, Intelligence: %s, Skill points: %s", self.speed_incr,
                  self.stamina_incr, self.power_incr, self.will_incr,
                  self.intelligence_incr, self.skill_point_incr)
-        text = "此训练附带支援卡列表：["
+        text = "Support cards for this training: ["
         for c in self.support_card_info_list:
             if c.favor != SupportCardFavorLevel.SUPPORT_CARD_FAVOR_LEVEL_UNKNOWN:
-                text += "[支援卡名称：" + str(c.name) + "支援卡类型：" + str(c.card_type.name) + ", 支援卡羁绊阶段：" + str(c.favor.name) + "] "
+                text += "[Support card name: " + str(c.name) + " Support card type: " + str(c.card_type.name) + ", Support card favor level: " + str(c.favor.name) + "] "
         text += "]"
         log.info(text)
 
@@ -83,10 +83,10 @@ class TurnOperation:
         self.race_id = 0
 
     def log_turn_operation(self):
-        log.info("本回合执行操作：%s", self.turn_operation_type.name)
-        log.info("本回合备选操作：%s", self.turn_operation_type_replace.name)
+        log.info("Operation for this turn: %s", self.turn_operation_type.name)
+        log.info("Alternative operation for this turn: %s", self.turn_operation_type_replace.name)
         if self.turn_operation_type == TurnOperationType.TURN_OPERATION_TYPE_TRAINING:
-            log.info("训练类型：%s", self.training_type.name)
+            log.info("Training type: %s", self.training_type.name)
 
 
 class TurnInfo:
@@ -120,20 +120,20 @@ class TurnInfo:
         self.turn_learn_skill_done = False
 
     def log_turn_info(self):
-        log.info("当前回合时间 >" + str(self.date))
-        log.info("干劲状态 " + str(self.motivation_level.name))
-        log.info("体力剩余" + str(self.remain_stamina))
-        log.info("当前属性值 速度：%s, 耐力：%s, 力量：%s, 毅力：%s, 智力：%s, 技能点：%s", self.uma_attribute.speed,
+        log.info("Current turn time: " + str(self.date))
+        log.info("Motivation status: " + str(self.motivation_level.name))
+        log.info("Remaining stamina: " + str(self.remain_stamina))
+        log.info("Current attribute values - Speed: %s, Stamina: %s, Power: %s, Willpower: %s, Intelligence: %s, Skill points: %s", self.uma_attribute.speed,
                  self.uma_attribute.stamina, self.uma_attribute.power, self.uma_attribute.will, self.uma_attribute.intelligence, self.uma_attribute.skill_point)
-        log.info("速度训练结果：")
+        log.info("Speed training result:")
         self.training_info_list[0].log_training_info()
-        log.info("耐力训练结果：")
+        log.info("Stamina training result:")
         self.training_info_list[1].log_training_info()
-        log.info("力量训练结果：")
+        log.info("Power training result:")
         self.training_info_list[2].log_training_info()
-        log.info("毅力训练结果：")
+        log.info("Willpower training result:")
         self.training_info_list[3].log_training_info()
-        log.info("智力训练结果：")
+        log.info("Intelligence training result:")
         self.training_info_list[4].log_training_info()
 
 
