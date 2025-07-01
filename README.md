@@ -48,18 +48,18 @@ bot:
     adb:
       device_name: "127.0.0.1:16384" # Change to emulator's ADB port
       delay: 0
-      bluestacks_config_path: "C:\\ProgramData\\BlueStacks_nxt\\bluestacks.conf" # Path to bluestacks.conf file
-      bluestacks_config_keyword: "bst.instance.Rvc64.status.adb_port" # Port key for corresponding emulator, Rvc64 is the emulator name, may differ (e.g. Rvc64_1, Pie64), search for adb_port in bluestacks.conf file to find it
-    cpu_alloc: 4 # Number of CPUs to allocate
+      bluestacks_config_path: "C:\\ProgramData\\BlueStacks_nxt\\bluestacks.conf" # bluestacks.conf 파일 경로
+      bluestacks_config_keyword: "bst.instance.Rvc64.status.adb_port" # 해당 에뮬레이터의 포트 키, Rvc64는 에뮬레이터 이름으로 다를 수 있음 (Rvc64_1, Pie64 등), bluestacks.conf 파일에서 adb_port를 검색하여 찾을 수 있음
+    cpu_alloc: 4 # 할당할 CPU 개수
 ```
 
-### 3. Emulator Settings
+### 3. 에뮬레이터 설정
 
-Set emulator resolution to 720 * 1280, DPI 180 (portrait mode)
-MuMu emulator cannot enable background keep-alive function
+에뮬레이터 해상도를 720 * 1280, DPI 180 (세로 모드)로 설정하세요
+MuMu 에뮬레이터는 백그라운드 유지 기능을 활성화할 수 없습니다
 
 
-### 4. Launch
+### 4. 실행
 
 Double-click to run run.ps1
 

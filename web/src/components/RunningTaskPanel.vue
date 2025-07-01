@@ -3,12 +3,12 @@
     <div class="card">
       <div v-if="runningTask === undefined" class="card-body">
         <div class="d-flex bd-highlight">
-          <h5 class="card-title">No running tasks</h5>
+          <h5 class="card-title">실행 중인 작업 없음</h5>
         </div>
       </div>
       <div v-if="runningTask !== undefined" class="card-body">
         <div class="d-flex bd-highlight">
-          <h5 class="card-title">Running: {{runningTask['task_desc']}}</h5>
+          <h5 class="card-title">실행 중: {{runningTask['task_desc']}}</h5>
           <span class="ml-auto"><i class="fa fa-cog fa-lg "></i></span>
         </div>
         <task-detail-info-handler :task="runningTask"></task-detail-info-handler>

@@ -8,8 +8,8 @@ from uvicorn import run
 
 if __name__ == '__main__':
     if sys.version_info.minor != 10 or sys.version_info.micro != 9:
-        print("\033[33m{}\033[0m".format("Warning: Python version is incorrect, may not run properly"))
-        print("Recommended Python version: 3.10.9 Current: " + sys.version)
+        print("\033[33m{}\033[0m".format("경고: Python 버전이 올바르지 않습니다. 제대로 실행되지 않을 수 있습니다"))
+        print("권장 Python 버전: 3.10.9 현재: " + sys.version)
     register_app(UmamusumeManifest)
     scheduler_thread = threading.Thread(target=scheduler.init, args=())
     scheduler_thread.start()

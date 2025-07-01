@@ -3,10 +3,10 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex bd-highlight">
-          <h5 class="card-title">Scheduled Tasks</h5>
+          <h5 class="card-title">예약된 작업</h5>
         </div>
       </div>
-      <TaskList v-bind:task-list="cronJobList" v-bind:no-data-label="'No scheduled tasks'"></TaskList>
+      <TaskList v-bind:task-list="cronJobList" v-bind:no-data-label="'예약된 작업 없음'"></TaskList>
     </div>
   </div>
 </template>

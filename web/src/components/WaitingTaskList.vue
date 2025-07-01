@@ -3,10 +3,10 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex bd-highlight">
-          <h5 class="card-title">Waiting</h5>
+          <h5 class="card-title">대기 중</h5>
         </div>
       </div>
-      <TaskList v-bind:task-list="waitingTaskList" v-bind:no-data-label="'No waiting tasks'"></TaskList>
+      <TaskList v-bind:task-list="waitingTaskList" v-bind:no-data-label="'대기 중인 작업 없음'"></TaskList>
     </div>
   </div>
 </template>

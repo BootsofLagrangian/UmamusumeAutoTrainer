@@ -28,9 +28,9 @@ class TaskStatus(Enum):
 
 
 class EndTaskReason(Enum):
-    COMPLETE = "Task Completed"
-    MANUAL_ABORTED = "Task Manually Aborted"
-    SYSTEM_ERROR = "System Error"
+    COMPLETE = "작업 완료"
+    MANUAL_ABORTED = "작업 수동 중단"
+    SYSTEM_ERROR = "시스템 오류"
 
 
 class Task(metaclass=ABCMeta):

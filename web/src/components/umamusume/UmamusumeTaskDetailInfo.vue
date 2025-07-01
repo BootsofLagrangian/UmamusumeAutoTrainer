@@ -2,10 +2,10 @@
   <div>
     <div v-if="task.task_type === 1">
       <div>
-        <span>Scenario: URA</span>
+        <span>시나리오: URA</span>
       </div>
       <div>
-        <span>Target Stats: {{task.detail?.expect_attribute}}</span>
+        <span>목표 스테이터스: {{task.detail?.expect_attribute}}</span>
       </div>
     </div>
   </div>

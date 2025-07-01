@@ -3,10 +3,10 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex bd-highlight">
-          <h5 class="card-title">Completed Tasks</h5>
+          <h5 class="card-title">완료된 작업</h5>
         </div>
       </div>
-      <TaskList v-bind:task-list="historyTaskList" v-bind:no-data-label="'No completed tasks'"></TaskList>
+      <TaskList v-bind:task-list="historyTaskList" v-bind:no-data-label="'완료된 작업 없음'"></TaskList>
     </div>
   </div>
 </template>

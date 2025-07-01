@@ -54,15 +54,15 @@ def parse_date(img, ctx: UmamusumeContext) -> int:
                                                   (255, 255, 255))
         turn_to_race_text = ocr_line(sub_img_turn_to_race)
         if turn_to_race_text == "比赛日":
-            log.debug("Debut race day")
+            log.debug("데뷔 레이스 날")
             return 12
         turn_to_race_text = re.sub("\\D", "", turn_to_race_text)
         if turn_to_race_text == '':
-            log.warning("Abnormal date recognition before debut race")
+            log.warning("데뷔 레이스 전 비정상적인 날짜 인식")
             return 12 - (len(ctx.cultivate_detail.turn_info_history) + 1)
         date_id = 12 - int(turn_to_race_text)
         if date_id < 1:
-            log.warning("Abnormal date recognition before debut race")
+            log.warning("데뷔 레이스 전 비정상적인 날짜 인식")
             return 12 - (len(ctx.cultivate_detail.turn_info_history) + 1)
     return date_id
 
@@ -140,7 +140,7 @@ def trans_attribute_value(text: str, ctx: UmamusumeContext,
         prev_turn_idx = len(ctx.cultivate_detail.turn_info_history)
         if prev_turn_idx != 0:
             history = ctx.cultivate_detail.turn_info_history[prev_turn_idx - 1]
-            log.warning("Image recognition error, using previous turn values")
+            log.warning("이미지 인식 오류, 이전 턴 값 사용")
             if train_type.value == 1:
                 return history.uma_attribute.speed
             elif train_type.value == 2:
@@ -341,7 +341,7 @@ def find_support_card(ctx: UmamusumeContext, img):
             s = SequenceMatcher(None, support_card_text, ctx.cultivate_detail.follow_support_card_name)
             if s.ratio() > 0.7:
                 ctx.ctrl.click(match_result.center_point[0], match_result.center_point[1] - 75,
-                               "Select support card: " + ctx.cultivate_detail.follow_support_card_name + "<" + str(
+                               "서포트 카드 선택: " + ctx.cultivate_detail.follow_support_card_name + "<" + str(
                                    support_card_level) + ">")
                 return True
         else:
@@ -380,7 +380,7 @@ def find_race(ctx: UmamusumeContext, img, race_id: int = 0) -> bool:
                 if target_race_template is not None:
                     if image_match(race_name_img, target_race_template).find_match:
                         ctx.ctrl.click(match_result.center_point[0], match_result.center_point[1],
-                                       "Select race: " + str(RACE_LIST[race_id][1]))
+                                       "레이스 선택: " + str(RACE_LIST[race_id][1]))
                         return True
             img[match_result.matched_area[0][1]:match_result.matched_area[1][1],
             match_result.matched_area[0][0]:match_result.matched_area[1][0]] = 0
@@ -413,7 +413,7 @@ def find_skill(ctx: UmamusumeContext, img, skill: list[str], learn_any_skill: bo
                             skill_pt_cost = int(skill_pt_cost_text)
                             if pt >= skill_pt_cost:
                                 ctx.ctrl.click(match_result.center_point[0] + 128, match_result.center_point[1],
-                                               "Add skill: " + text)
+                                               "스킬 추가: " + text)
                                 if result in skill:
                                     skill.remove(result)
                                 ctx.cultivate_detail.learn_skill_selected = True

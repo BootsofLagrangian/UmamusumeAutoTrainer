@@ -58,7 +58,7 @@ def script_info(ctx: UmamusumeContext):
         log.debug(title_text)
         title_text = find_similar_text(title_text, TITLE, 0.8)
         if title_text == "":
-            log.warning("Unknown option box")
+            log.warning("알 수 없는 옵션 박스")
             return
         if title_text == TITLE[0]:
             ctx.ctrl.click_by_point(CULTIVATE_GOAL_RACE_INTER_3)
@@ -75,7 +75,7 @@ def script_info(ctx: UmamusumeContext):
                 ctx.cultivate_detail.clock_used += 1
             else:
                 ctx.ctrl.click_by_point(RACE_FAIL_CONTINUE_CANCEL)
-            log.debug("Clock limit: %s, used: %s", str(ctx.cultivate_detail.clock_use_limit),
+            log.debug("시계 제한: %s, 사용됨: %s", str(ctx.cultivate_detail.clock_use_limit),
                       str(ctx.cultivate_detail.clock_used))
         if title_text == TITLE[4]:
             ctx.ctrl.click_by_point(GET_TITLE_CONFIRM)

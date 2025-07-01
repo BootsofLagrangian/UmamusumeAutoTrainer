@@ -19,7 +19,7 @@ class Scheduler:
     active = False
 
     def add_task(self, task):
-        log.info("Added task: " + task.task_id)
+        log.info("작업 추가됨: " + task.task_id)
         self.task_list.append(task)
 
     def delete_task(self, task_id):
@@ -68,7 +68,7 @@ class Scheduler:
                                         cron = croniter.croniter(task.cron_job_config.cron, now)
                                         task.cron_job_config.next_time = cron.get_next(datetime.datetime)
                     else:
-                        log.warning("Unknown task type: " + str(task.task_execute_mode) + ", task_id: " + str(task.task_id))
+                        log.warning("알 수 없는 작업 유형: " + str(task.task_execute_mode) + ", task_id: " + str(task.task_id))
 
             else:
                 if task_executor.active:

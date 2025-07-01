@@ -1,16 +1,16 @@
-DATE_YEAR = ['Junior', 'Classic', 'Senior', 'Finals']
-DATE_MONTH = ['Pre-debut', 'January 1st Half', 'January 2nd Half', 'February 1st Half', 'February 2nd Half', 'March 1st Half', 'March 2nd Half', 'April 1st Half', 'April 2nd Half',
-              'May 1st Half', 'May 2nd Half', 'June 1st Half', 'June 2nd Half', 'July 1st Half', 'July 2nd Half',
-              'August 1st Half', 'August 2nd Half', 'September 1st Half', 'September 2nd Half', 'October 1st Half', 'October 2nd Half', 'November 1st Half', 'November 2nd Half', 'December 1st Half',
-              'December 2nd Half']
+DATE_YEAR = ['주니어급', '클래식급', '시니어급', '파이널즈']
+DATE_MONTH = ['데뷔 전', '1월 상반기', '1월 후반', '2월 전반', '2월 후반', '3월 전반', '3월 후반', '4월 전반', '4월 후반',
+              '5월 전반', '5월 후반', '6월 전반', '6월 후반', '7월 전반', '7월 후반',
+              '8월 전반', '8월 후반', '9월 전반', '9월 후반', '10월 전반', '10월 후반', '11월 전반', '11월 후반', '12월 전반',
+              '12월 후반']
 
 SKILL_LEARN_PRIORITY_LIST = [
     [
-        'Arc Artist', 'Swift as Wind', 'Whirlwind', 'Curve Expert'
+        '아크 아티스트', '바람처럼 빠르게', '회오리바람', '코너 전문가'
     ],
     [
-        'Focus', 'Deceleration Avoidance Pretty Derby', 'Quick Adaptation', 'Position Sense', 'Straight Specialist', 'All Out', 'Pretty Derby Enthusiast', 'Mountaineer', 'Foundation Building', 'Tail Up', 'Keep Calm', 'Accelerate Pace',
-        'Final Sprint', 'Corner Recovery'
+        '집중력', '감속 회피 프리티 더비', '빠른 적응', '포지션 센스', '직선 전문가', '전력 질주', '프리티 더비 애호가', '산악인', '기초 체력', '꼬리 올리기', '침착함 유지', '페이스 가속',
+        '마지막 스퍼트', '코너 회복'
     ]
 
 ]

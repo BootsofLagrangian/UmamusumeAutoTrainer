@@ -73,7 +73,7 @@ def exec_script(ctx: UmamusumeContext):
     if ctx.current_ui in default_script_dict:
         default_script_dict[ctx.current_ui](ctx)
     else:
-        print("No default script found for this interface")
+        print("이 인터페이스에 대한 기본 스크립트를 찾을 수 없습니다")
 
 
 UmamusumeManifest = AppManifest(

@@ -17,7 +17,7 @@ def script_cultivate_main_menu(ctx: UmamusumeContext):
     img = ctx.current_screen
     current_date = parse_date(img, ctx)
     if current_date == -1:
-        log.warning("Failed to parse date")
+        log.warning("날짜 파싱 실패")
         return
     # If entering a new turn, record old turn info and create new one
     if ctx.cultivate_detail.turn_info is None or current_date != ctx.cultivate_detail.turn_info.date:
@@ -81,7 +81,7 @@ def script_cultivate_main_menu(ctx: UmamusumeContext):
 
 def script_cultivate_training_select(ctx: UmamusumeContext):
     if ctx.cultivate_detail.turn_info is None:
-        log.warning("Turn info not initialized")
+        log.warning("턴 정보가 초기화되지 않음")
         ctx.ctrl.click_by_point(RETURN_TO_CULTIVATE_MAIN_MENU)
         return
 
@@ -184,7 +184,7 @@ def script_cultivate_final_check(ctx: UmamusumeContext):
 def script_cultivate_event(ctx: UmamusumeContext):
     img = ctx.ctrl.get_screen()
     event_name, selector_list = parse_cultivate_event(ctx, img)
-    log.debug("当前事件：%s", event_name)
+    log.debug("현재 이벤트: %s", event_name)
     if len(selector_list) != 0 and len(selector_list) != 1:
         time.sleep(0.5)
         # 避免出现选项残缺的情况，这里重新解析一次
@@ -195,16 +195,16 @@ def script_cultivate_event(ctx: UmamusumeContext):
         if choice_index - 1 > len(selector_list):
             choice_index = 1
         ctx.ctrl.click(selector_list[choice_index - 1][0], selector_list[choice_index - 1][1],
-                       "Event option-" + str(choice_index))
+                       "이벤트 옵션-" + str(choice_index))
     else:
-        log.debug("No options appeared")
+        log.debug("옵션이 표시되지 않음")
 
 
 def script_cultivate_goal_race(ctx: UmamusumeContext):
     img = ctx.current_screen
     current_date = parse_date(img, ctx)
     if current_date == -1:
-        log.warning("Failed to parse date")
+        log.warning("날짜 파싱 실패")
         return
     # If entering a new turn, record old turn info and create new one
     if ctx.cultivate_detail.turn_info is None or current_date != ctx.cultivate_detail.turn_info.date:
@@ -218,7 +218,7 @@ def script_cultivate_goal_race(ctx: UmamusumeContext):
 def script_cultivate_race_list(ctx: UmamusumeContext):
     time.sleep(2)
     if ctx.cultivate_detail.turn_info is None:
-        log.warning("Turn info not initialized")
+        log.warning("턴 정보가 초기화되지 않음")
         ctx.ctrl.click_by_point(RETURN_TO_CULTIVATE_MAIN_MENU)
         return
     img = cv2.cvtColor(ctx.current_screen, cv2.COLOR_BGR2GRAY)
@@ -250,7 +250,7 @@ def script_cultivate_race_list(ctx: UmamusumeContext):
                     return
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
                 if not compare_color_equal(img[1006, 701], [211, 209, 219]):
-                    log.warning("Target race not found")
+                    log.warning("대상 레이스를 찾을 수 없음")
                     # Use backup operation if no suitable race found
                     if ctx.cultivate_detail.turn_info.turn_operation.race_id == 0:
                         ctx.cultivate_detail.turn_info.turn_operation.turn_operation_type = ctx.cultivate_detail.turn_info.turn_operation.turn_operation_type_replace
@@ -376,7 +376,7 @@ def script_cultivate_learn_skill(ctx: UmamusumeContext):
         ctx.ctrl.swipe(x1=23, y1=1000, x2=23, y2=636, duration=1000, name="")
         time.sleep(1)
 
-    log.debug("Current skill status: " + str(skill_list))
+    log.debug("현재 스킬 상태: " + str(skill_list))
 
     # Bind gold skills with their subsequent skills
     for i in range(len(skill_list)):
@@ -440,8 +440,8 @@ def script_cultivate_learn_skill(ctx: UmamusumeContext):
         ctx.ctrl.swipe(x1=23, y1=636, x2=23, y2=1000, duration=1000, name="")
         time.sleep(1)
 
-    log.debug("Current skills to learn: " + str(ctx.cultivate_detail.learn_skill_list))
-    log.debug("Current learned skills: " + str([skill['skill_name'] for skill in skill_list if not skill['available']]))
+    log.debug("현재 배울 스킬: " + str(ctx.cultivate_detail.learn_skill_list))
+    log.debug("현재 배운 스킬: " + str([skill['skill_name'] for skill in skill_list if not skill['available']]))
 
     ctx.cultivate_detail.learn_skill_done = True
     ctx.cultivate_detail.turn_info.turn_learn_skill_done = True

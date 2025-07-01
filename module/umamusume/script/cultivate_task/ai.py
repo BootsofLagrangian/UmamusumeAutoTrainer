@@ -76,7 +76,7 @@ def get_operation(ctx: UmamusumeContext) -> TurnOperation | None:
     for i in range(5):
         training_score.append(normalized_attribute_result[i] * attr_weight + normalized_support_card_result[i] *
                               support_card_weight + normalized_training_level_result[i] * training_level_weight)
-    log.debug("Training comprehensive scores: " + str(training_score))
+    log.debug("트레이닝 종합 점수: " + str(training_score))
 
     # Can only participate in races after winning debut race
     if ctx.cultivate_detail.debut_race_win:
@@ -132,7 +132,7 @@ def get_training_level_score(ctx: UmamusumeContext):
     result = []
     for i in range(len(expect_attribute)):
         result.append(expect_attribute[i] / sum(expect_attribute) * total_score)
-    log.debug("Score for each training facility: " + str(result))
+    log.debug("각 트레이닝 시설 점수: " + str(result))
     return result
 
 
@@ -144,7 +144,7 @@ def get_training_support_card_score(ctx: UmamusumeContext) -> list[float]:
         for j in range(len(turn_info.training_info_list[i].support_card_info_list)):
             score += get_support_card_score(ctx, turn_info.training_info_list[i].support_card_info_list[j])
         result.append(score)
-    log.debug("Support card score for each training: " + str(result))
+    log.debug("각 트레이닝의 서포트 카드 점수: " + str(result))
     return result
 
 
@@ -159,7 +159,7 @@ def get_training_basic_attribute_score(ctx: UmamusumeContext, turn_info: TurnInf
             extra_weight = ctx.cultivate_detail.extra_weight[1]
         elif 48 < date:
             extra_weight = ctx.cultivate_detail.extra_weight[2]
-    log.debug("Extra weight for this turn: " + str(extra_weight))
+    log.debug("이번 턴의 추가 가중치: " + str(extra_weight))
     turn_expect_attribute = [0, 0, 0, 0, 0]
     ura_extra_attr = 50
     if date > 72:
@@ -177,7 +177,7 @@ def get_training_basic_attribute_score(ctx: UmamusumeContext, turn_info: TurnInf
     result = []
     expect_attribute_all_complete = all(x >= y for x, y in zip(turn_uma_attr, cultivate_expect_attribute))
     if expect_attribute_all_complete:
-        log.debug("Cultivation target attributes achieved")
+        log.debug("육성 목표 속성 달성")
         for i in range(len(turn_info.training_info_list)):
             incr = [turn_info.training_info_list[i].speed_incr, turn_info.training_info_list[i].stamina_incr,
                     turn_info.training_info_list[i].power_incr, turn_info.training_info_list[i].will_incr,
@@ -213,15 +213,15 @@ def get_training_basic_attribute_score(ctx: UmamusumeContext, turn_info: TurnInf
                                 rating_incr += 0.25 * (cultivate_expect_attribute[j] - turn_expect_attribute[j])
             # rating_incr += turn_info.training_info_list[i].skill_point_incr * 1.45
             result.append(rating_incr * (1 + extra_weight[i]))
-        log.debug("Raw attribute growth score for each training: " + str(result))
-        log.debug("Expected attributes for this turn: " + str(turn_expect_attribute))
+        log.debug("각 트레이닝의 원시 속성 성장 점수: " + str(result))
+        log.debug("이번 턴의 기대 속성: " + str(turn_expect_attribute))
         target_percent = [0, 0, 0, 0, 0]
         for i in range(len(turn_uma_attr)):
             target_percent[i] = turn_uma_attr[i] / turn_expect_attribute[i]
         avg = sum(target_percent) / len(target_percent)
         for i in range(len(result)):
             result[i] = result[i] * (1 - (target_percent[i] - avg))
-    log.debug("Attribute growth score for each training: " + str(result))
+    log.debug("각 트레이닝의 속성 성장 점수: " + str(result))
     return result
 
 
@@ -236,7 +236,7 @@ def get_basic_status_score(status: int) -> float:
             result += status_score[i] * 100
         else:
             if i - 1 > 11:
-                log.debug("Recognition error")
+                log.debug("인식 오류")
                 return 0
             result += status * status_score[i - 1]
             break

@@ -42,13 +42,13 @@ class TrainingInfo:
         self.support_card_info_list = []
 
     def log_training_info(self):
-        log.info("Training result: Speed: %s, Stamina: %s, Power: %s, Willpower: %s, Intelligence: %s, Skill points: %s", self.speed_incr,
+        log.info("트레이닝 결과: 스피드: %s, 스태미나: %s, 파워: %s, 근성: %s, 지능: %s, 스킬 포인트: %s", self.speed_incr,
                  self.stamina_incr, self.power_incr, self.will_incr,
                  self.intelligence_incr, self.skill_point_incr)
-        text = "Support cards for this training: ["
+        text = "이 트레이닝의 서포트 카드: ["
         for c in self.support_card_info_list:
             if c.favor != SupportCardFavorLevel.SUPPORT_CARD_FAVOR_LEVEL_UNKNOWN:
-                text += "[Support card name: " + str(c.name) + " Support card type: " + str(c.card_type.name) + ", Support card favor level: " + str(c.favor.name) + "] "
+                text += "[서포트 카드 이름: " + str(c.name) + " 서포트 카드 타입: " + str(c.card_type.name) + ", 서포트 카드 호감도: " + str(c.favor.name) + "] "
         text += "]"
         log.info(text)
 
@@ -83,10 +83,10 @@ class TurnOperation:
         self.race_id = 0
 
     def log_turn_operation(self):
-        log.info("Operation for this turn: %s", self.turn_operation_type.name)
-        log.info("Alternative operation for this turn: %s", self.turn_operation_type_replace.name)
+        log.info("이번 턴 작업: %s", self.turn_operation_type.name)
+        log.info("이번 턴 대체 작업: %s", self.turn_operation_type_replace.name)
         if self.turn_operation_type == TurnOperationType.TURN_OPERATION_TYPE_TRAINING:
-            log.info("Training type: %s", self.training_type.name)
+            log.info("트레이닝 타입: %s", self.training_type.name)
 
 
 class TurnInfo:
@@ -120,20 +120,20 @@ class TurnInfo:
         self.turn_learn_skill_done = False
 
     def log_turn_info(self):
-        log.info("Current turn time: " + str(self.date))
-        log.info("Motivation status: " + str(self.motivation_level.name))
-        log.info("Remaining stamina: " + str(self.remain_stamina))
-        log.info("Current attribute values - Speed: %s, Stamina: %s, Power: %s, Willpower: %s, Intelligence: %s, Skill points: %s", self.uma_attribute.speed,
+        log.info("현재 턴 시간: " + str(self.date))
+        log.info("동기 상태: " + str(self.motivation_level.name))
+        log.info("남은 스태미나: " + str(self.remain_stamina))
+        log.info("현재 속성 값 - 스피드: %s, 스태미나: %s, 파워: %s, 근성: %s, 지능: %s, 스킬 포인트: %s", self.uma_attribute.speed,
                  self.uma_attribute.stamina, self.uma_attribute.power, self.uma_attribute.will, self.uma_attribute.intelligence, self.uma_attribute.skill_point)
-        log.info("Speed training result:")
+        log.info("스피드 트레이닝 결과:")
         self.training_info_list[0].log_training_info()
-        log.info("Stamina training result:")
+        log.info("스태미나 트레이닝 결과:")
         self.training_info_list[1].log_training_info()
-        log.info("Power training result:")
+        log.info("파워 트레이닝 결과:")
         self.training_info_list[2].log_training_info()
-        log.info("Willpower training result:")
+        log.info("근성 트레이닝 결과:")
         self.training_info_list[3].log_training_info()
-        log.info("Intelligence training result:")
+        log.info("지능 트레이닝 결과:")
         self.training_info_list[4].log_training_info()
 
 

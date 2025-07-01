@@ -3,26 +3,26 @@
     <div  class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <h5 class="modal-header">
-          Create New Task
+          새 작업 생성
         </h5>
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="selectTaskType">⭐ Task Selection</label>
+              <label for="selectTaskType">⭐ 작업 선택</label>
               <select v-model="selectedUmamusumeTaskType" class="form-control" id="selectTaskType">
                 <option v-for="task in umamusumeTaskTypeList" :value="task">{{task.name}}</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="selectExecuteMode">⭐ Execution Mode Selection</label>
+              <label for="selectExecuteMode">⭐ 실행 모드 선택</label>
               <select v-model="selectedExecuteMode" class="form-control" id="selectExecuteMode">
-                <option value=1>One-time</option>
+                <option value=1>1회성</option>
               </select>
             </div>
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="selectSernaio">⭐ Scenario Selection</label>
+                  <label for="selectSernaio">⭐ 시나리오 선택</label>
                   <select class="form-control" id="selectSernaio">
                     <option value=1>URA</option>
                   </select>
@@ -30,18 +30,18 @@
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="selectUmamusume">Uma Musume Selection</label>
+                  <label for="selectUmamusume">우마무스메 선택</label>
                   <select disabled class="form-control" id="selectUmamusume">
-                    <option value=1>Use Last Selection</option>
+                    <option value=1>이전 선택 사용</option>
                   </select>
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="selectAutoRecoverTP">Auto recover when TP insufficient (potions only)</label>
+                  <label for="selectAutoRecoverTP">체력 부족 시 자동 회복 (물약만 사용)</label>
                   <select v-model="recoverTP" class="form-control" id="selectAutoRecoverTP">
-                    <option :value=true>Yes</option>
-                    <option :value=false>No</option>
+                    <option :value=true>예</option>
+                    <option :value=false>아니오</option>
                   </select>
                 </div>
               </div>
@@ -49,21 +49,21 @@
             <div class="row">
               <div class="col-8">
                 <div class="form-group">
-                  <label for="race-select">⭐ Use Preset</label>
+                  <label for="race-select">⭐ 프리셋 사용</label>
                     <div class="form-inline">
                       <select v-model="presetsUse" style="text-overflow: ellipsis;width: 40em;"  class="form-control" id="use_presets">
                         <option v-for="set in cultivatePresets" :value="set">{{set.name}}</option>
                       </select>
-                      <span class="btn auto-btn ml-2" v-on:click="applyPresetRace">Apply</span>
+                      <span class="btn auto-btn ml-2" v-on:click="applyPresetRace">적용</span>
                     </div>
                 </div>
               </div>
               <div class="col-4">
                 <div class="form-group">
-                  <label for="presetNameEditInput">Save as Preset</label>
+                  <label for="presetNameEditInput">프리셋으로 저장</label>
                   <div class="form-inline">
-                    <input v-model="presetNameEdit" type="text" class="form-control" id="presetNameEditInput" placeholder="Preset Name">
-                    <span class="btn auto-btn ml-2" v-on:click="addPresets">Save</span>
+                    <input v-model="presetNameEdit" type="text" class="form-control" id="presetNameEditInput" placeholder="프리셋 이름">
+                    <span class="btn auto-btn ml-2" v-on:click="addPresets">저장</span>
                   </div>
                 </div>
               </div>
@@ -72,7 +72,7 @@
             <div class="row">
               <div class="col-4">
                 <div class="form-group">
-                  <label>⭐ Support Card Selection</label>
+                  <label>⭐ 서포트 카드 선택</label>
                   <select v-model="selectedSupportCard" class="form-control" id="selectedSupportCard">
                     <option v-for="card in umausumeSupportCardList" :value="card">({{card.desc}}) {{card.name}}</option>
                   </select>
@@ -80,65 +80,65 @@
               </div>
               <div class="col-2">
                 <div class="form-group">
-                  <label for="selectSupportCardLevel">Support Card Level (≥)</label>
+                  <label for="selectSupportCardLevel">서포트 카드 레벨 (≥)</label>
                   <input v-model="supportCardLevel" type="number" class="form-control" id="selectSupportCardLevel" placeholder="">
                 </div>
               </div>
               <div class="col-3">
                 <div class="form-group">
-                  <label for="inputClockUseLimit">Clock Usage Limit</label>
+                  <label for="inputClockUseLimit">시계 사용 제한</label>
                   <input v-model="clockUseLimit" type="number" class="form-control" id="inputClockUseLimit" placeholder="">
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <div>⭐ Target Attributes (If unsure about values, play manually once and input final stats)</div>
+              <div>⭐ 목표 스테이터스 (값이 확실하지 않으면 수동으로 한 번 플레이해서 최종 수치 입력)</div>
             </div>
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                    <label for="speed-value-input">Speed</label>
+                    <label for="speed-value-input">스피드</label>
                     <input type="number" v-model="expectSpeedValue" class="form-control" id="speed-value-input">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="stamina-value-input">Stamina</label>
+                  <label for="stamina-value-input">스태미나</label>
                   <input type="number" v-model="expectStaminaValue" class="form-control" id="stamina-value-input">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="power-value-input">Power</label>
+                  <label for="power-value-input">파워</label>
                   <input type="number" v-model="expectPowerValue" class="form-control" id="power-value-input">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="will-value-input">Guts</label>
+                  <label for="will-value-input">근성</label>
                   <input type="number" v-model="expectWillValue" class="form-control" id="will-value-input">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="intelligence-value-input">Wisdom</label>
+                  <label for="intelligence-value-input">지능</label>
                   <input type="number" v-model="expectIntelligenceValue" class="form-control" id="intelligence-value-input">
                 </div>
               </div>
             </div>
             <div>
               <div class="form-group">
-              <span v-if="!showAdvanceOption" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchAdvanceOption">Expand Advanced Options</span>
-              <span v-if="showAdvanceOption" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchAdvanceOption">Collapse Advanced Options</span>
+              <span v-if="!showAdvanceOption" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchAdvanceOption">고급 옵션 펼치기</span>
+              <span v-if="showAdvanceOption" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchAdvanceOption">고급 옵션 접기</span>
               </div>
             </div>
             <div v-if ="showAdvanceOption">
               <div class="form-group">
-                <div>⭐ Extra Weight</div>
+                <div>⭐ 추가 가중치</div>
               </div>
-              <p>Adjust AI training preferences without affecting final target attributes. Used to prioritize certain training types. Recommended weight range [-1.0 ~ 1.0], 0 means no extra weight.</p>
-              <p>When support cards or stallions are weak, increase weight for one attribute while decreasing others by the same amount.</p>
-              <div style="margin-bottom: 10px;">First Year</div>
+              <p>최종 목표 스테이터스에 영향을 주지 않고 AI 트레이닝 선호도를 조정합니다. 특정 트레이닝 유형을 우선시하는 데 사용됩니다. 권장 가중치 범위 [-1.0 ~ 1.0], 0은 추가 가중치 없음을 의미합니다.</p>
+              <p>서포트 카드나 종마가 약할 때, 한 속성의 가중치를 늘리는 동시에 다른 속성들을 같은 양만큼 줄이세요.</p>
+              <div style="margin-bottom: 10px;">1학년</div>
               <div class="row">
                 <div v-for="v,i in extraWeight1" class="col">
                   <div class="form-group">
@@ -146,7 +146,7 @@
                   </div>
                 </div>
               </div>
-              <div style="margin-bottom: 10px;">Second Year</div>
+              <div style="margin-bottom: 10px;">2학년</div>
               <div class="row">
                 <div v-for="v,i in extraWeight2" class="col">
                   <div class="form-group">
@@ -154,7 +154,7 @@
                   </div>
                 </div>
               </div>
-              <div style="margin-bottom: 10px;">Third Year</div>
+              <div style="margin-bottom: 10px;">3학년</div>
               <div class="row">
                 <div v-for="v,i in extraWeight3" class="col">
                   <div class="form-group">
@@ -165,39 +165,39 @@
             </div>
 
             <div class="form-group">
-              <div>⭐ Racing Strategy Selection</div>
+              <div>⭐ 레이싱 전략 선택</div>
             </div>
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="selectTactic1">First Year</label>
+                  <label for="selectTactic1">1학년</label>
                   <select v-model="selectedRaceTactic1" class="form-control" id="selectTactic1">
-                    <option :value=1>Closer (Oikomi)</option>
-                    <option :value=2>Mid-pack (Sashi)</option>
-                    <option :value=3>Front runner (Senkou)</option>
-                    <option :value=4>Pace setter (Nige)</option>
+                    <option :value=1>후방추입 (오이코미)</option>
+                    <option :value=2>선입 (사시)</option>
+                    <option :value=3>선행 (센코)</option>
+                    <option :value=4>도주 (니게)</option>
                   </select>
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="selectTactic2">Second Year</label>
+                  <label for="selectTactic2">2학년</label>
                   <select v-model="selectedRaceTactic2" class="form-control" id="selectTactic2">
-                    <option :value=1>Closer (Oikomi)</option>
-                    <option :value=2>Mid-pack (Sashi)</option>
-                    <option :value=3>Front runner (Senkou)</option>
-                    <option :value=4>Pace setter (Nige)</option>
+                    <option :value=1>후방추입 (오이코미)</option>
+                    <option :value=2>선입 (사시)</option>
+                    <option :value=3>선행 (센코)</option>
+                    <option :value=4>도주 (니게)</option>
                   </select>
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="selectTactic3">Third Year</label>
+                  <label for="selectTactic3">3학년</label>
                   <select v-model="selectedRaceTactic3" class="form-control" id="selectTactic3">
-                    <option :value=1>Closer (Oikomi)</option>
-                    <option :value=2>Mid-pack (Sashi)</option>
-                    <option :value=3>Front runner (Senkou)</option>
-                    <option :value=4>Pace setter (Nige)</option>
+                    <option :value=1>후방추입 (오이코미)</option>
+                    <option :value=2>선입 (사시)</option>
+                    <option :value=3>선행 (센코)</option>
+                    <option :value=4>도주 (니게)</option>
                   </select>
                 </div>
               </div>
@@ -206,18 +206,18 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="race-select">⭐ Additional Race Selection</label>
+                    <label for="race-select">⭐ 추가 레이스 선택</label>
                     <textarea type="text" disabled v-model="extraRace" class="form-control" id="race-select"></textarea>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-              <span v-if="!showRaceList" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchRaceList">Expand Race Options</span>
-              <span v-if="showRaceList" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchRaceList">Collapse Race Options</span>
+              <span v-if="!showRaceList" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchRaceList">레이스 옵션 펼치기</span>
+              <span v-if="showRaceList" class="btn auto-btn" style="width: 100%; background-color:#6c757d;" v-on:click="switchRaceList">레이스 옵션 접기</span>
               </div>
               <div class="row" v-if="showRaceList"> 
                 <div class="col">
-                  <div>First Year</div>
+                  <div>1학년</div>
                   <br/>
                   <div class="form-check">
                     <div v-for="race in umamusumeRaceList_1">
@@ -229,7 +229,7 @@
                   </div>
                 </div>
                 <div class="col">
-                  <div>Second Year</div>
+                  <div>2학년</div>
                   <br/>
                   <div class="form-check">
                     <div v-for="race in umamusumeRaceList_2">
@@ -241,7 +241,7 @@
                   </div>
                 </div>
                 <div class="col">
-                  <div>Third Year</div>
+                  <div>3학년</div>
                   <br/>
                   <div class="form-check">
                     <div v-for="race in umamusumeRaceList_3">
@@ -258,23 +258,23 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="skill-learn">⭐ Skill Learning</label>
+                    <label for="skill-learn">⭐ 스킬 학습</label>
                   </div>
                 </div>
               </div>
             </div>
             <div v-for="(item,index) in skillLearnPriorityList" :key="item.priority">
               <div class="form-group row">
-                <label class="col-sm-3" for="'skill-learn-' + item.id">❗ Learning Priority {{ item.priority+1 }}</label>
+                <label class="col-sm-3" for="'skill-learn-' + item.id">❗ 학습 우선순위 {{ item.priority+1 }}</label>
                 <div class="col-sm-6">
                   <textarea type="text"  v-model="item.skills" class="form-control" id="skill-learn-priority" placeholder="Skill1 name, Skill2 name,... (use English comma)"></textarea>
                 </div>
                 <div class="col-sm-3">
-                  <span class="red-button auto-btn ml-2" v-on:click="deleteBox(item,index)">Delete Current Priority</span>
+                  <span class="red-button auto-btn ml-2" v-on:click="deleteBox(item,index)">현재 우선순위 삭제</span>
                 </div>
               </div>
             </div>
-            <span class="btn auto-btn ml-2" v-on:click="addBox(item)">Add Priority</span>
+            <span class="btn auto-btn ml-2" v-on:click="addBox(item)">우선순위 추가</span>
             <div class="form-group mb-0">
               <div class="row">
                 <div class="col">
@@ -290,7 +290,7 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="skill-learn-blacklist">⛔ Blacklist (Never learn these skills under any circumstances)</label>
+                    <label for="skill-learn-blacklist">⛔ 블랙리스트 (어떤 상황에서도 이 스킬들을 학습하지 않음)</label>
                     <textarea type="text"  v-model="skillLearnBlacklist" class="form-control" id="skill-learn-blacklist" placeholder="Iron Will, Swift as Wind,... (surely no one would pick these)"></textarea>
                   </div>
                 </div>
@@ -340,14 +340,14 @@
           </div> -->
         </div>
         <div class="modal-footer">
-          <span class="btn auto-btn" v-on:click="addTask">Confirm</span>
+          <span class="btn auto-btn" v-on:click="addTask">확인</span>
         </div>
       </div>
       <!-- 通知 -->
       <div class="position-fixed" style="z-index: 5; right: 40%; width: 300px;">
         <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
           <div class="toast-body">
-            ✔ Preset saved successfully
+            ✔ 프리셋 저장 완료
           </div>
         </div>
       </div>

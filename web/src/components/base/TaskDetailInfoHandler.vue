@@ -4,19 +4,19 @@
       <div>
         <span v-if="task.task_start_time !== undefined" class="small time">{{task.task_start_time}}</span>
         <span v-if="task.end_task_time !== undefined" class="small time"> ~ {{task.end_task_time}}</span>
-        <span v-if= "task.task_start_time === undefined" class="small time">Not Started</span>
-        <div v-if="task.task_execute_mode === 'CRON_JOB'" class="small time">Next execution time: {{task.cron_job_info?.next_time}} ({{task.cron_job_info?.cron}})</div>
+        <span v-if= "task.task_start_time === undefined" class="small time">시작 안함</span>
+        <div v-if="task.task_execute_mode === 'CRON_JOB'" class="small time">다음 실행 시간: {{task.cron_job_info?.next_time}} ({{task.cron_job_info?.cron}})</div>
       </div>
       <div class="btn-group float-right" role="group" aria-label="Basic example">
-        <button type="button" class="btn auto-btn" v-on:click="resetTask">Reset</button>
-        <button type="button" class="btn auto-btn" v-on:click="deleteTask">Delete</button>
+        <button type="button" class="btn auto-btn" v-on:click="resetTask">초기화</button>
+        <button type="button" class="btn auto-btn" v-on:click="deleteTask">삭제</button>
       </div>
       <UmamusumeTaskDetailInfo :task="task"></UmamusumeTaskDetailInfo>
       <div v-if="task.end_task_reason !== undefined && task.end_task_reason != ''">
-        <span>Status: {{task.task_status}} ({{task.end_task_reason}})</span>
+        <span>상태: {{task.task_status}} ({{task.end_task_reason}})</span>
       </div>
       <div v-if="task.detail.cultivate_result.factor_list !== undefined && task.detail.cultivate_result.factor_list.length !== 0">
-        Factors Obtained: <span class="mr-1" v-for="factor in task.detail.cultivate_result.factor_list">
+        획득 인자: <span class="mr-1" v-for="factor in task.detail.cultivate_result.factor_list">
           <span v-if="factor[0] === 'Speed' || factor[0] === 'Stamina'|| factor[0] === 'Power'|| factor[0] === 'Guts'|| factor[0] === 'Wisdom'"  style="background-color: #49BFF7;" class="badge badge-pill badge-secondary">{{factor[0]}}({{factor[1]}})</span>
           <span v-if="factor[0] === 'Sprint' || factor[0] === 'Mile'|| factor[0] === 'Medium Distance'|| factor[0] === 'Long Distance'|| factor[0] === 'Dirt'|| factor[0] === 'Turf'|| factor[0] === 'Pace Setter'|| factor[0] === 'Front Runner'|| factor[0] === 'Mid-pack'|| factor[0] === 'Closer'"  style="background-color: #FF78B2;" class="badge badge-pill badge-secondary">{{factor[0]}}({{factor[1]}})</span>
           <span v-if="factor[0] !== 'Speed' && factor[0] !== 'Stamina'&& factor[0] !== 'Power'&& factor[0] !== 'Guts'&& factor[0] !== 'Wisdom'&& factor[0] !== 'Sprint' && factor[0] !== 'Mile'&& factor[0] !== 'Medium Distance'&& factor[0] !== 'Long Distance'&& factor[0] !== 'Dirt'&& factor[0] !== 'Turf' &&factor[0] !== 'Pace Setter'&& factor[0] !== 'Front Runner'&& factor[0] !== 'Mid-pack'&& factor[0] !== 'Closer'" 
